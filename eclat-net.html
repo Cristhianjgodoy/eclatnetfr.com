@@ -539,10 +539,9 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
         Contacter sur WhatsApp
       </a>
     </div>
-    <form class="cform" action="https://api.web3forms.com/submit" method="POST">
+    <form class="cform" id="devisForm">
       <input type="hidden" name="access_key" value="c5dc5597-7ac6-43ec-b47a-a2b6ef531d5e"/>
       <input type="hidden" name="subject" value="Nouvelle demande de devis – Éclat Net"/>
-      <input type="hidden" name="redirect" value="false"/>
       <div class="cform-title">Demande de devis gratuit</div>
       <div class="frow">
         <div class="fg"><label>Prénom *</label><input type="text" name="prenom" placeholder="Votre prénom" required/></div>
@@ -568,8 +567,13 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
         <div class="fg"><label>Code postal *</label><input type="text" name="codepostal" placeholder="Ex : 38200" required/></div>
       </div>
       <div class="fg"><label>Détails *</label><textarea name="message" placeholder="Décrivez votre besoin : surface, fréquence souhaitée, contraintes d'accès…" required></textarea></div>
-      <button type="submit" class="sbtn">Envoyer ma demande →</button>
+      <button type="submit" class="sbtn" id="submitBtn">Envoyer ma demande →</button>
     </form>
+    <div id="formSuccess" style="display:none;background:#e6faf5;border:1.5px solid #00c4a0;border-radius:12px;padding:2rem 1.5rem;text-align:center;margin-top:1rem;">
+      <div style="font-size:2.2rem;margin-bottom:.5rem;">✅</div>
+      <div style="font-size:1.1rem;font-weight:700;color:#0b2545;margin-bottom:.4rem;">Demande envoyée avec succès !</div>
+      <div style="color:#444;font-size:.95rem;">Nous vous répondrons dans les meilleurs délais. Merci !</div>
+    </div>
   </div>
 </section>
 
@@ -593,5 +597,31 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
   </div>
 </footer>
 
+<script>
+document.getElementById('devisForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+  const data = new FormData(form);
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {method:'POST', body: data});
+    const json = await res.json();
+    if (json.success) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Envoyer ma demande →';
+      alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
+    }
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Envoyer ma demande →';
+    alert('Une erreur de connexion est survenue. Veuillez réessayer.');
+  }
+});
+</script>
 </body>
 </html>
