@@ -541,7 +541,7 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
     </div>
     <form class="cform" id="devisForm">
       <input type="hidden" name="access_key" value="c5dc5597-7ac6-43ec-b47a-a2b6ef531d5e"/>
-      <input type="hidden" name="subject" value="Nouvelle demande de devis – Éclat Net"/>
+      <input type="hidden" name="subject" value=""/>
       <div class="cform-title">Demande de devis gratuit</div>
       <div class="frow">
         <div class="fg"><label>Prénom *</label><input type="text" name="prenom" placeholder="Votre prénom" required/></div>
@@ -605,6 +605,9 @@ document.getElementById('devisForm').addEventListener('submit', async function(e
   btn.disabled = true;
   btn.textContent = 'Envoi en cours…';
   const data = new FormData(form);
+  const prenom = data.get('prenom') || '';
+  const prestation = data.get('prestation') || '';
+  data.set('subject', `ÉclatNet - ${prenom}, ${prestation}`);
   try {
     const res = await fetch('https://api.web3forms.com/submit', {method:'POST', body: data});
     const json = await res.json();
