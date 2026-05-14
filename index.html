@@ -539,19 +539,23 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
         Contacter sur WhatsApp
       </a>
     </div>
-    <form class="cform" id="devis-form">
+    <form class="cform" action="https://formsubmit.co/eclatnetfr@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Nouvelle demande de devis – Éclat Net"/>
+      <input type="hidden" name="_captcha" value="false"/>
+      <input type="hidden" name="_template" value="table"/>
+      <input type="hidden" name="_next" value="https://eclatnetfr.com?merci=1"/>
       <div class="cform-title">Demande de devis gratuit</div>
       <div class="frow">
-        <div class="fg"><label>Prénom</label><input type="text" name="prenom" placeholder="Votre prénom" required/></div>
-        <div class="fg"><label>Nom</label><input type="text" name="nom" placeholder="Votre nom" required/></div>
+        <div class="fg"><label>Prénom *</label><input type="text" name="prenom" placeholder="Votre prénom" required/></div>
+        <div class="fg"><label>Nom *</label><input type="text" name="nom" placeholder="Votre nom" required/></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>Téléphone</label><input type="tel" name="telephone" placeholder="Votre numéro de téléphone" required/></div>
-        <div class="fg"><label>E-mail</label><input type="email" name="email" placeholder="Votre adresse e-mail" required/></div>
+        <div class="fg"><label>Téléphone *</label><input type="tel" name="telephone" placeholder="Votre numéro de téléphone" required/></div>
+        <div class="fg"><label>E-mail *</label><input type="email" name="email" placeholder="Votre adresse e-mail" required/></div>
       </div>
       <div class="fg">
-        <label>Type de prestation</label>
-        <select name="prestation">
+        <label>Type de prestation *</label>
+        <select name="prestation" required>
           <option value="">— Choisissez —</option>
           <option>Nettoyage de vitres &amp; façades</option>
           <option>Nettoyage de moquettes</option>
@@ -561,11 +565,11 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
         </select>
       </div>
       <div class="frow">
-        <div class="fg"><label>Ville</label><input type="text" name="ville" placeholder="Votre ville" required/></div>
-        <div class="fg"><label>Code postal</label><input type="text" name="codepostal" placeholder="Ex : 38200" required/></div>
+        <div class="fg"><label>Ville *</label><input type="text" name="ville" placeholder="Votre ville" required/></div>
+        <div class="fg"><label>Code postal *</label><input type="text" name="codepostal" placeholder="Ex : 38200" required/></div>
       </div>
-      <div class="fg"><label>Détails (optionnel)</label><textarea name="message" placeholder="Décrivez votre besoin : surface, fréquence souhaitée, contraintes d'accès…"></textarea></div>
-      <button type="submit" class="sbtn">Envoyer ma demande par e-mail →</button>
+      <div class="fg"><label>Détails *</label><textarea name="message" placeholder="Décrivez votre besoin : surface, fréquence souhaitée, contraintes d'accès…" required></textarea></div>
+      <button type="submit" class="sbtn">Envoyer ma demande →</button>
     </form>
   </div>
 </section>
@@ -590,16 +594,5 @@ footer{background:#0a1828;padding:2.4rem 5%;display:flex;align-items:center;just
   </div>
 </footer>
 
-<script>
-document.getElementById('devis-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const d = new FormData(this);
-  const nom = d.get('prenom') + ' ' + d.get('nom');
-  const prestation = d.get('prestation') || 'Non précisé';
-  const subject = 'Devis – ' + nom + ' – ' + prestation;
-  const body = `Bonjour,\n\nNom : ${nom}\nTéléphone : ${d.get('telephone')}\nE-mail : ${d.get('email')}\nPrestation : ${prestation}\nVille : ${d.get('ville')} ${d.get('codepostal')}\nDétails : ${d.get('message') || '—'}`;
-  window.location.href = 'mailto:eclatnetfr@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-});
-</script>
 </body>
 </html>
