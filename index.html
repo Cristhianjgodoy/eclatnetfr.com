@@ -608,7 +608,8 @@ document.getElementById('devisForm').addEventListener('submit', async function(e
   const prenom = data.get('prenom') || '';
   const nom = data.get('nom') || '';
   const prestation = data.get('prestation') || '';
-  data.set('subject', `ÉclatNet - ${prenom} ${nom} - ${prestation}`);
+  data.set('from_name', 'ÉclatNet - Orçamento');
+  data.set('subject', `${prenom} ${nom} - ${prestation}`);
   try {
     const res = await fetch('https://api.web3forms.com/submit', {method:'POST', body: data});
     const json = await res.json();
